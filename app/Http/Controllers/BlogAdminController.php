@@ -26,7 +26,8 @@ class BlogAdminController extends Controller
      */
     public function create()
     {
-        return view('dashboard.articles.create');
+        $article = new Article();
+        return view('dashboard.articles.create', ['article' => $article]);
     }
 
     /**
@@ -37,23 +38,12 @@ class BlogAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|min:3',
-            'intro' => 'required',
-            'content' => 'required',
-            'author' => 'required',
-            'published' => '',
-        ]);
-
-        $validated['published'] = false;
-        if(isset($data['published'])) {
-            $validated['published'] = true;
-        }
+        $validated = $this->validateArticle($request);
 
         $article = new Article($validated);
         $article->save();
 
-        redirect()->route('articles.index');
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -75,7 +65,7 @@ class BlogAdminController extends Controller
      */
     public function edit(Article $article)
     {
-        return "Edit";
+        return view('dashboard.articles.edit', ['article' => $article]);
     }
 
     /**
@@ -87,7 +77,10 @@ class BlogAdminController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        return "Update";
+        $validated = $this->validateArticle($request);
+
+        $article->update($validated);
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -98,6 +91,25 @@ class BlogAdminController extends Controller
      */
     public function destroy(Article $article)
     {
-        return "Destroy";
+        $article->delete($article);
+
+        return redirect()->route('articles.index');
+    }
+
+    protected function validateArticle(Request $request) {
+        $validated = $request->validate([
+            'title' => 'required|min:3',
+            'intro' => 'required',
+            'content' => 'required',
+            'author' => 'required',
+            'published' => '',
+        ]);
+
+        $validated['published'] = false;
+        if(isset($data['published'])) {
+            $validated['published'] = true;
+        }
+
+        return $validated;
     }
 }

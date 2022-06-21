@@ -23,6 +23,12 @@
         <ul class="navigationbar__list">
             <li class="navigationbar__listitem"><a class="navigationbar__link" href="{{ route('home') }}">Home</a></li>
             <li class="navigationbar__listitem"><a class="navigationbar__link" href="{{ route('blog') }}">Blog</a></li>
+            @guest
+                <li class="navigationbar__listitem"><a href="{{ route('Login') }}" class="navigationbar__link">Dashboard</a></li>
+            @endguest
+            @auth
+                <li class="navigationbar__listitem"><a href="{{ route('dashboard') }}" class="navigationbar__link">Dashboard</a></li>
+            @endauth
         </ul>
     </nav>
 </header>

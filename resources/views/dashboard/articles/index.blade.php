@@ -13,9 +13,26 @@
 
                     <p><a class="underline" href="{{ route('articles.create') }}">Nieuw blog artikel maken</a></p>
 
-                    @foreach($articles as $article)
-                        <a href="">{{ $article->title }} {{ $article->id }}</a><br>
-                    @endforeach
+                    <table class="w-full table-auto p-2 my-3">
+                        @foreach($articles as $article)
+                            <tr class="border">
+                                <td class="py-1 px-2">
+                                    <a href="{{ route('articles.edit', ['article' => $article]) }}">{{ $article->title }}</a><br>
+                                </td>
+                                <td class="py-1 px-2"><a class="underline px-3" href="{{ route('articles.edit', ['article' => $article]) }}">Edit</a><br></td>
+                                <td class="py-1 px-2">
+                                    <form action="{{ route('articles.destroy', ['article' => $article]) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="underline" type="submit">Delete</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+
+                        @endforeach
+                    </table>
+
 
                     {{ $articles->links() }}
 
