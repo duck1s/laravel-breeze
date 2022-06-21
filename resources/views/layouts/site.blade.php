@@ -18,7 +18,7 @@
 </head>
 <body>
 <header class="header">
-    <h2>Title</h2>
+    <h2>F3M8PROG - Laravel</h2>
     <nav class="navigationbar">
         <ul class="navigationbar__list">
             <li class="navigationbar__listitem"><a class="navigationbar__link" href="{{ route('home') }}">Home</a></li>

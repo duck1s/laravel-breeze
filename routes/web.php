@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogAdminController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -22,8 +23,14 @@ Route::get('/welcome', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::prefix('/dashboard')->middleware(['auth'])->group(function() {
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::resources([
+        'articles' => BlogAdminController::class,
+    ]);
+});
 
 require __DIR__.'/auth.php';
