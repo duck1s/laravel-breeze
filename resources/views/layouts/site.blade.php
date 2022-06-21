@@ -16,22 +16,22 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-    @include('layouts.navigation')
-    <p>navbar</p>
+<body>
+<header class="header">
+    <h2>Title</h2>
+    <nav class="navigationbar">
+        <ul class="navigationbar__list">
+            <li class="navigationbar__listitem"><a class="navigationbar__link" href="{{ route('home') }}">Home</a></li>
+            <li class="navigationbar__listitem"><a class="navigationbar__link" href="{{ route('blog') }}">Blog</a></li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+    {{ $slot }}
+</main>
+<footer class="footer">
+    <p>Made by Joeri Breedveld</p>
+</footer>
 
-    <!-- Page Heading -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {{ $header }}
-        </div>
-    </header>
-
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
-</div>
 </body>
 </html>
